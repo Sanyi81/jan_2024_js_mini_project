@@ -11,8 +11,6 @@ let id = url.searchParams.get('id');
 let userDetailsBlock = document.createElement('div');
 userDetailsBlock.classList.add('user_details');
 
-// let key = 'key';
-// let user = JSON.parse(localStorage.getItem(key));
 fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
     .then(res => res.json())
     .then(user => {
@@ -43,10 +41,10 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
             addressZipcode.innerText = `zipcode: ${user.address.zipcode}`;
             let addressGeo = document.createElement('divGeo');
             addressGeo.innerText = `geo:`;
-            let geoLat = document.createElement('p');
-            geoLat.innerText = `lat: ${user.address.geo.lat}`;
-            let geoLng = document.createElement('p');
-            geoLng.innerText = `lng: ${user.address.geo.lng}`;
+                let geoLat = document.createElement('p');
+                geoLat.innerText = `lat: ${user.address.geo.lat}`;
+                let geoLng = document.createElement('p');
+                geoLng.innerText = `lng: ${user.address.geo.lng}`;
         addressGeo.append(geoLat, geoLng);
         userAddress.append(addressStreet, addressSuite, addressCity, addressZipcode, addressGeo);
 
@@ -66,10 +64,45 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
             companyBs.innerText = `bs: ${user.company.bs}`;
         company.append(companyName, companyCatchPhrase, companyBs);
 
-        div.append(userId, userName, userUsername, userEmail, userAddress, userPhone, userWebsite, company);
+let btn = document.createElement('button');
+btn.innerText = 'Post of current user';
+btn.classList.add('post_button');
 
-        document.body.appendChild(div);
+let postBlock = document.createElement('ul');
+postBlock.classList.add('posts');
+userDetailsBlock.appendChild(postBlock);
+
+btn.onclick = (e) => {
+    e.preventDefault();
+        fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/posts`)
+            .then(res => res.json())
+            .then(posts => {
+        for (const post of posts) {
+            let postList = document.createElement('li');
+            postList.classList.add('post_list');
+            postList.innerText = post.title;
+            postBlock.appendChild(postList);
+
+
+        }
+                let postBtn = document.createElement('button');
+                postBtn.classList.add('more_posts');
+
+                let a = document.createElement('a');
+                a.classList.add('user_posts')
+                a.href = `./post_details.html?id=${user.id}`;
+                a.innerText = 'Post details';
+
+                postBtn.appendChild(a);
+                postBlock.appendChild(postBtn);
     });
 
-let btn = document.createElement('button');
+};
+
+
+
+        div.append(userId, userName, userUsername, userEmail, userAddress, userPhone, userWebsite, company);
+        userDetailsBlock.append(div, btn, postBlock);
+        document.body.appendChild(userDetailsBlock);
+});
 
