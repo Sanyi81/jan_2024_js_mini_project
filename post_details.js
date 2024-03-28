@@ -14,38 +14,78 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
     .then(posts => {
         let div = document.createElement('div');
         div.classList.add('posts')
-
         for (const post of posts) {
 
-            // let userId = document.createElement('p');
-            // userId.innerText = `User ID: ${post.userId}`;
-            // div.appendChild(userId);
+            let userId = document.createElement('h3');
+            userId.innerText = `User ID: ${post.userId}`;
+            div.appendChild(userId);
 
             let id = document.createElement('p');
             id.innerText = `ID: ${post.id}`;
-            div.appendChild(id);
 
             let title = document.createElement('p');
             title.innerText = `Title: ${post.title}`;
-            div.appendChild(title);
 
             let body = document.createElement('p');
             body.innerText = `Body: ${post.body}`;
-            div.appendChild(body);
+
+            let showBtn = document.createElement('button');
+            showBtn.classList.add('comments_btn')
+            showBtn.innerText = 'Comments';
+
+            let hidenBtn = document.createElement('button');
+            hidenBtn.classList.add('hiden_btn');
+            hidenBtn.innerText = 'Hiden comments';
 
 
-            let btn = document.createElement('button');
-            btn.classList.add('btn')
-            div.appendChild(btn);
 
-            let a = document.createElement('a');
-            a.href = `./post-details.html?id=${post.id}`;
-            a.innerText = 'Comments';
+            div.append(id, title, body, showBtn, hidenBtn);
 
-            btn.appendChild(a);
+            let commentsDiv = document.createElement('div');
+            commentsDiv.classList.add('comments');
+            div.appendChild(commentsDiv);
+
+
+            showBtn.onclick = (e) => {
+                e.preventDefault();
+
+                fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
+                    .then(res => res.json())
+                    .then(comments => {
+                        for (const comment of comments) {
+                            let commentsList = document.createElement('div');
+                            commentsList.classList.add('comments_list');
+
+                            let commentPostId = document.createElement('p');
+                            commentPostId.innerText = `postId: ${comment.postId}`;
+
+                            let commentId = document.createElement('p');
+                            commentId.innerText = `Id: ${comment.id}`;
+
+                            let commentName = document.createElement('p');
+                            commentName.innerText = `Name: ${comment.name}`;
+
+                            let commentEmail = document.createElement('p');
+                            commentEmail.innerText = `Email: ${comment.email}`;
+
+                            let commentBody = document.createElement('p');
+                            commentBody.innerText = `Comment: ${comment.body}`;
+
+                            commentsList.append(commentPostId, commentId, commentName, commentEmail, commentBody);
+                            commentsDiv.appendChild(commentsList);
+
+                            if (showBtn) {
+                                showBtn.setAttribute('disabled', 'disabled')
+                            }
+
+
+                        }
+                    });
+            }
+
+
 
             postDetails.appendChild(div);
-
             document.body.appendChild(postDetails);
         }
     });

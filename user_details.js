@@ -82,8 +82,6 @@ btn.onclick = (e) => {
             postList.classList.add('post_list');
             postList.innerText = post.title;
             postBlock.appendChild(postList);
-
-
         }
                 let postBtn = document.createElement('button');
                 postBtn.classList.add('more_posts');
