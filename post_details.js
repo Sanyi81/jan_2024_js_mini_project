@@ -30,21 +30,16 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
             body.innerText = `Body: ${post.body}`;
 
             let showBtn = document.createElement('button');
-            showBtn.classList.add('comments_btn')
+            showBtn.classList.add('comments_btn');
             showBtn.innerText = 'Comments';
 
-            let hidenBtn = document.createElement('button');
-            hidenBtn.classList.add('hiden_btn');
-            hidenBtn.innerText = 'Hiden comments';
-
-
-
-            div.append(id, title, body, showBtn, hidenBtn);
+            div.append(id, title, body, showBtn);
 
             let commentsDiv = document.createElement('div');
             commentsDiv.classList.add('comments');
-            div.appendChild(commentsDiv);
 
+
+            div.appendChild(commentsDiv);
 
             showBtn.onclick = (e) => {
                 e.preventDefault();
@@ -77,14 +72,9 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
                             if (showBtn) {
                                 showBtn.setAttribute('disabled', 'disabled')
                             }
-
-
                         }
                     });
             }
-
-
-
             postDetails.appendChild(div);
             document.body.appendChild(postDetails);
         }
