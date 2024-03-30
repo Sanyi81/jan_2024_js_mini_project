@@ -1,0 +1,31 @@
+body {
+    background: lightgoldenrodyellow;
+    margin: 0;
+}
+.info {
+    margin-left: 50px;
+}
+p {
+    margin: 0;
+}
+.address {
+    margin-left: 70px;
+}
+.geo {
+    margin-left: 30px;
+}
+.post_button {
+    margin-top: 25px;
+    width: 90%;
+    background: sandybrown;
+    color: midnightblue;
+    font-weight: bold;
+}
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user_posts {
+    text-decoration: none;
+}
