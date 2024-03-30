@@ -9,12 +9,11 @@ let id = url.searchParams.get('id');
 let postDetails = document.createElement('div');
 postDetails.classList.add('post_block');
 
-fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
+fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
     .then(res => res.json())
-    .then(posts => {
+    .then(post => {
         let div = document.createElement('div');
         div.classList.add('posts')
-        for (const post of posts) {
 
             let userId = document.createElement('h3');
             userId.innerText = `User ID: ${post.userId}`;
@@ -37,7 +36,6 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
 
             let commentsDiv = document.createElement('div');
             commentsDiv.classList.add('comments');
-
 
             div.appendChild(commentsDiv);
 
@@ -69,14 +67,13 @@ fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
                             commentsList.append(commentPostId, commentId, commentName, commentEmail, commentBody);
                             commentsDiv.appendChild(commentsList);
 
-                            if (showBtn) {
-                                showBtn.setAttribute('disabled', 'disabled')
-                            }
+                        }
+                        if (showBtn) {
+                                showBtn.setAttribute('disabled', 'disabled');
                         }
                     });
             }
             postDetails.appendChild(div);
             document.body.appendChild(postDetails);
-        }
     });
 
